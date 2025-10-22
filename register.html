@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STICKMOON - Inscription</title>
+  <style>
+    :root{
+      --bg:#f4f5fb;
+      --card:#ffffff;
+      --accent:#6a3be0;
+      --muted:#6e6e7a;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.7);
+    }
+
+    body {
+      margin:0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #fff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: var(--muted);
+    }
+
+    .card {
+      background: var(--card);
+      padding: 30px 25px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 20px rgba(10,10,20,0.08);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.08);
+      font-size: 15px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(106,59,224,0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #7c54ee;
+    }
+
+    .link {
+      margin-top: 15px;
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>STICKMOON</h1>
+    <h2>S'inscrire</h2>
+
+    <label for="name">Nom d'utilisateur</label>
+    <input type="text" id="name" placeholder="Entrez votre nom" required>
+
+    <label for="password">Mot de passe</label>
+    <input type="password" id="password" placeholder="Créez un mot de passe" required>
+
+    <label for="email">Gmail</label>
+    <input type="email" id="email" placeholder="Entrez votre adresse Gmail" required>
+
+    <button onclick="registerUser()">Continuer</button>
+
+    <div class="link" onclick="goToLogin()">Se connecter</div>
+  </div>
+
+  <script>
+    function registerUser() {
+      const name = document.getElementById('name').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!name || !password || !email) {
+        alert("Veuillez remplir tous les champs !");
+        return;
+      }
+
+      const userData = {
+        name: name,
+        password: password,
+        email: email
+      };
+
+      localStorage.setItem("stickmoon_user", JSON.stringify(userData));
+
+      window.location.href = "personnalite.html";
+    }
+
+    function goToLogin() {
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STICKMOON - préférence</title>
+  <style>
+   :root{
+      --bg:#f4f5fb;
+      --card:#ffffff;
+      --accent:#6a3be0;
+      --muted:#6e6e7a;
+      --danger:#ef4444;
+      --radius:12px;
+      --glass: rgba(255,255,255,0.7);
+    }
+    
+    body{
+      margin:0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      background:linear-gradient(180deg,var(--bg),#fff);
+      color: #0b1220;
+      -webkit-font-smoothing:antialiased;
+      padding:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow: 0 8px 22px rgba(15,15,25,0.06);
+      margin-bottom:14px;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .chip-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .chip {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: var(--glass);
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.25s;
+      user-select: none;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 4px 12px rgba(106,59,224,0.2);
+    }
+    
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: #7c54ee;
+    }
+    
+   </style>
+  </head>
+  <body>
+  <div class="card">
+    <h1>Choisissez votre préférence 😎</h1>
+    <p>Sélectionnez la préférence.</p>
+
+    <div id="préférence" class="chip-wrap"></div>
+
+    <button onclick="saveAndContinue()">Continuer</button>
+  </div>
+    
+   <script>
+    const préférence = [
+      {id:'FESTIVAL', label:' 🎇 FESTIVAL'},
+      {id:'FOOT', label:' ⚽ FOOT'},
+      {id:'BASKET', label:' 🏀 BASKET'},
+      {id:'NFL', label:' 🏈 NFL'},
+      {id:'GAMING', label:' 🎮 GAMING'},
+      {id:'SAGE', label:'😇 SAGE'},
+      {id:'DRAME', label:'🌹 DRAME'},
+      {id:'ANIMÉ', label:'🈵 ANIMÉ'},
+      {id:'OTHER', label:'🖲️ OTHER'}
+    ];
+    
+    const persWrap = document.getElementById('préférence');
+    préférence.forEach(p=>{
+      const d = document.createElement('div');
+      d.className='chip';
+      d.dataset.id=p.id;
+      d.textContent = p.label;
+      d.addEventListener('click', ()=> {
+        // Un seul choix à la fois
+        document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        d.classList.toggle('active');
+      });
+      persWrap.appendChild(d);
+    });
+
+    function saveAndContinue() {
+      const selected = document.querySelector('.chip.active');
+      if(!selected){
+        alert(" Veuillez sélectionner une préférence !");
+        return;
+      }
+
+      const user = JSON.parse(localStorage.getItem('stickmoon_user')) || {};
+      user.personnalite = selected.dataset.id;
+      localStorage.setItem('stickmoon_user', JSON.stringify(user));
+
+      window.location.href = "createprofil.html";
+    }
+  </script>
+</body>
+</html>
